@@ -45,18 +45,18 @@ function targz() {
 }
 
 # Determine size of a file or total size of a directory
-function fs() {
-	if du -b /dev/null > /dev/null 2>&1; then
-		local arg=-sbh;
-	else
-		local arg=-sh;
-	fi
-	if [[ -n "$@" ]]; then
-		du $arg -- "$@";
-	else
-		du $arg .[^.]* ./*;
-	fi;
-}
+#function fs() {
+#	if du -b /dev/null > /dev/null 2>&1; then
+#		local arg=-sbh;
+#	else
+#		local arg=-sh;
+#	fi
+#	if [[ -n "$@" ]]; then
+#		du $arg -- "$@";
+#	else
+#		du $arg .[^.]* ./*;
+#	fi;
+#}
 
 # Use Git’s colored diff when available
 hash git &>/dev/null;
@@ -86,12 +86,12 @@ function server() {
 
 # Start a PHP server from a directory, optionally specifying the port
 # (Requires PHP 5.4.0+.)
-function phpserver() {
-	local port="${1:-4000}";
-	local ip=$(ipconfig getifaddr en1);
-	sleep 1 && open "http://${ip}:${port}/" &
-	php -S "${ip}:${port}";
-}
+#function phpserver() {
+#	local port="${1:-4000}";
+#	local ip=$(ipconfig getifaddr en1);
+#	sleep 1 && open "http://${ip}:${port}/" &
+#	php -S "${ip}:${port}";
+#}
 
 # Compare original and gzipped file size
 function gz() {
@@ -168,4 +168,32 @@ function o() {
 # small enough for one screen.
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+
+function dockershellhere() {  
+    dirname=${PWD##*/}
+    docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "$@"
+}
+
+function dockershellshhere() {  
+    dirname=${PWD##*/}
+    docker run --rm -it --entrypoint=/bin/sh -v `pwd`:/${dirname} -w /${dirname} "$@"
+}
+
+function kalishellhere() {  
+    dirname=${PWD##*/}
+    docker run --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "kalilinux/kali-linux-docker"
+}
+
+function msfhere() {  
+    dirname=${PWD##*/}
+    docker run -p 8080:8080 --rm -it --entrypoint=/bin/bash -v `pwd`:/${dirname} -w /${dirname} "metasploitframework/metasploit-framework"
+}
+
+function makedmg {
+ #  $> makedmg somename 
+ if [ ! -e "${1}.sparsebundle" ]; then
+     hdiutil create -type SPARSEBUNDLE -size 10g -volname $1 -nospotlight -encryption AES-128 -fs HFS+ "$1"
+     open "${1}.sparsebundle"
+ fi
 }

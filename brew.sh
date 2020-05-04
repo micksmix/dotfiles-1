@@ -28,7 +28,9 @@ brew install bash-completion2
 # zsh
 brew install zsh
 # set zsh as default
-# sudo sh -c "echo $(which zsh) >> /etc/shells" && chsh -s $(which zsh)
+sudo sh -c "echo $(which zsh) >> /etc/shells" && chsh -s $(which zsh)
+# install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Switch to using brew-installed bash as default shell
 if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then

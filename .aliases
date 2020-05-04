@@ -141,6 +141,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 	# copy working directory
 	alias cwd='pwd | tr -d "\r\n" | pbcopy'
+
+	alias rm='trash'
 fi
 
 
@@ -182,7 +184,6 @@ alias nginxhere='docker run --rm -it -p 80:80 -p 443:443 -v "${PWD}:/srv/data" r
 alias nofmt='pbpaste | pbcopy'
 alias cppwd='echo -n "`pwd`" | pbcopy'
 alias cppwde='printf "%q" "`pwd`" | pbcopy'
-alias rm='trash'
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"

@@ -15,5 +15,7 @@ git clone https://github.com/zsh-users/zsh-completions $HOME/.oh-my-zsh/custom/p
 ln -sf $HOME/dotfiles/zsh/zshrc $HOME/.zshrc
 rm -rf $HOME/.oh-my-zsh/themes/honukai.zsh-theme
 rm -rf $HOME/.oh-my-zsh/themes/powerlevel9k.zsh-theme
-cp $HOME/dotfiles/init/honukai.zsh-theme $HOME/.oh-my-zsh/themes/honukai.zsh-theme
-cp $HOME/dotfiles/init/powerlevel9k.zsh-theme $HOME/.oh-my-zsh/themes/powerlevel9k.zsh-theme
+ln -sf $HOME/dotfiles/init/honukai.zsh-theme $HOME/.oh-my-zsh/themes/honukai.zsh-theme
+ln -sf $HOME/dotfiles/init/powerlevel9k.zsh-theme $HOME/.oh-my-zsh/themes/powerlevel9k.zsh-theme
+# cp $HOME/dotfiles/init/honukai.zsh-theme $HOME/.oh-my-zsh/themes/honukai.zsh-theme
+# cp $HOME/dotfiles/init/powerlevel9k.zsh-theme $HOME/.oh-my-zsh/themes/powerlevel9k.zsh-theme

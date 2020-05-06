@@ -2,7 +2,7 @@
 git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
 # change shell
-chsh -s zsh
+chsh -s $(which zsh)
 
 # plugins and theme
 git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions

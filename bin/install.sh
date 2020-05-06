@@ -7,6 +7,14 @@ set -o pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
+IS_MAC=false
+IS_LINUX=false
+if [[ "$(uname -s)" == "Darwin" ]]; then
+	IS_MAC=true
+elif [[ "$(uname)" == "Linux" ]]; then
+	IS_LINUX=true
+fi
+
 # Choose a user account to use for this installation
 get_user() {
 	if [[ -z "${TARGET_USER-}" ]]; then
@@ -37,123 +45,130 @@ check_is_sudo() {
 
 
 setup_sources_min() {
-	apt update || true
-	apt install -y \
-		apt-transport-https \
-		ca-certificates \
-		curl \
-		dirmngr \
-		gnupg2 \
-		lsb-release \
-		--no-install-recommends
 
-	# hack for latest git (don't judge)
-	cat <<-EOF > /etc/apt/sources.list.d/git-core.list
-	deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
-	EOF
+	if $IS_LINUX; then
+		apt update || true
+		apt install -y \
+			apt-transport-https \
+			ca-certificates \
+			curl \
+			dirmngr \
+			gnupg2 \
+			lsb-release \
+			--no-install-recommends
 
-	# iovisor/bcc-tools
-	cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
-	deb https://repo.iovisor.org/apt/xenial xenial main
-	EOF
+		# hack for latest git (don't judge)
+		cat <<-EOF > /etc/apt/sources.list.d/git-core.list
+		deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+		deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+		EOF
 
-	# add the git-core ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
+		# iovisor/bcc-tools
+		cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
+		deb https://repo.iovisor.org/apt/xenial xenial main
+		EOF
 
-	# add the iovisor/bcc-tools gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 648A4A16A23015EEF4A66B8E4052245BD4284CDD
+		# add the git-core ppa gpg key
+		apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
 
-	# turn off translations, speed up apt update
-	mkdir -p /etc/apt/apt.conf.d
-	echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+		# add the iovisor/bcc-tools gpg key
+		apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 648A4A16A23015EEF4A66B8E4052245BD4284CDD
+
+		# turn off translations, speed up apt update
+		mkdir -p /etc/apt/apt.conf.d
+		echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+	fi
 }
 
 # sets up apt sources
 # assumes you are going to use debian buster
 setup_sources() {
-	setup_sources_min;
 
-	cat <<-EOF > /etc/apt/sources.list
-	deb http://httpredir.debian.org/debian buster main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
+	if $IS_LINUX; then
+		setup_sources_min;
 
-	deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
+		cat <<-EOF > /etc/apt/sources.list
+		deb http://httpredir.debian.org/debian buster main contrib non-free
+		deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
 
-	deb http://security.debian.org/ buster/updates main contrib non-free
-	deb-src http://security.debian.org/ buster/updates main contrib non-free
+		deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
+		deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
 
-	deb http://httpredir.debian.org/debian experimental main contrib non-free
-	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
-	EOF
+		deb http://security.debian.org/ buster/updates main contrib non-free
+		deb-src http://security.debian.org/ buster/updates main contrib non-free
 
-	# yubico
-	cat <<-EOF > /etc/apt/sources.list.d/yubico.list
-	deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
-	EOF
+		deb http://httpredir.debian.org/debian experimental main contrib non-free
+		deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+		EOF
 
-	# Add the Google Chrome distribution URI as a package source
-	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
-	deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-	EOF
+		# yubico
+		cat <<-EOF > /etc/apt/sources.list.d/yubico.list
+		deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
+		deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
+		EOF
 
-	# Import the Google Chrome public key
-	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+		# Add the Google Chrome distribution URI as a package source
+		cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
+		deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+		EOF
+
+		# Import the Google Chrome public key
+		curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+	fi
 
 }
 
 base_min() {
-	apt update || true
-	apt -y upgrade
+	if $IS_LINUX; then
+		apt update || true
+		apt -y upgrade
 
-	apt install -y \
-		adduser \
-		automake \
-		bash-completion \
-		bc \
-		bzip2 \
-		ca-certificates \
-		coreutils \
-		curl \
-		dnsutils \
-		file \
-		findutils \
-		gcc \
-		git \
-		gnupg \
-		gnupg2 \
-		grep \
-		gzip \
-		hostname \
-		indent \
-		iptables \
-		jq \
-		less \
-		libc6-dev \
-		locales \
-		lsof \
-		make \
-		mount \
-		net-tools \
-		policykit-1 \
-		silversearcher-ag \
-		ssh \
-		strace \
-		sudo \
-		tar \
-		tree \
-		tzdata \
-		unzip \
-		vim \
-		xz-utils \
-		zip \
-		--no-install-recommends
+		apt install -y \
+			adduser \
+			automake \
+			bash-completion \
+			bc \
+			bzip2 \
+			ca-certificates \
+			coreutils \
+			curl \
+			dnsutils \
+			file \
+			findutils \
+			gcc \
+			git \
+			gnupg \
+			gnupg2 \
+			grep \
+			gzip \
+			hostname \
+			indent \
+			iptables \
+			jq \
+			less \
+			libc6-dev \
+			locales \
+			lsof \
+			make \
+			mount \
+			net-tools \
+			silversearcher-ag \
+			ssh \
+			strace \
+			sudo \
+			tar \
+			tree \
+			tzdata \
+			unzip \
+			vim \
+			xz-utils \
+			zip \
+			--no-install-recommends
 
-	apt autoremove
-	apt autoclean
-	apt clean
+		apt autoremove
+		apt autoclean
+		apt clean
+	fi
 
 	install_scripts
 }
@@ -163,31 +178,34 @@ base_min() {
 base() {
 	base_min;
 
-	apt update || true
-	apt -y upgrade
+	if $IS_LINUX; then
+		apt update || true
+		apt -y upgrade
 
-	apt install -y \
-		apparmor \
-		bridge-utils \
-		cgroupfs-mount \
-		fwupd \
-		fwupdate \
-		gnupg-agent \
-		libapparmor-dev \
-		libimobiledevice6 \
-		libltdl-dev \
-		libpam-systemd \
-		libseccomp-dev \
-		pinentry-curses \
-		scdaemon \
-		systemd \
-		--no-install-recommends
+		apt install -y \
+			apparmor \
+			bridge-utils \
+			cgroupfs-mount \
+			fonts-hack-ttf \
+			fwupd \
+			fwupdate \
+			gnupg-agent \
+			libapparmor-dev \
+			libimobiledevice6 \
+			libltdl-dev \
+			libpam-systemd \
+			libseccomp-dev \
+			pinentry-curses \
+			scdaemon \
+			systemd \
+			--no-install-recommends
 
-	setup_sudo
+		setup_sudo
 
-	apt autoremove
-	apt autoclean
-	apt clean
+		apt autoremove
+		apt autoclean
+		apt clean
+	fi
 }
 
 # setup sudo for a user
@@ -198,31 +216,27 @@ base() {
 # so its pointless
 # i know what the fuck im doing ;)
 setup_sudo() {
-	# add user to sudoers
-	adduser "$TARGET_USER" sudo
+	if $IS_LINUX; then
+		# add user to sudoers
+		adduser "$TARGET_USER" sudo
 
-	# add user to systemd groups
-	# then you wont need sudo to view logs and shit
-	gpasswd -a "$TARGET_USER" systemd-journal
-	gpasswd -a "$TARGET_USER" systemd-network
+		# add user to systemd groups
+		# then you wont need sudo to view logs and shit
+		gpasswd -a "$TARGET_USER" systemd-journal
+		gpasswd -a "$TARGET_USER" systemd-network
 
-	# create docker group
-	sudo groupadd docker
-	sudo gpasswd -a "$TARGET_USER" docker
+		# create docker group
+		sudo groupadd docker
+		sudo gpasswd -a "$TARGET_USER" docker
 
-	# add go path to secure path
-	{ \
-		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${TARGET_USER}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/bcc/tools:/home/${TARGET_USER}/.cargo/bin\""; \
-		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
-		echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
-		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
-	} >> /etc/sudoers
-
-	# setup downloads folder as tmpfs
-	# that way things are removed on reboot
-	# i like things clean but you may not want this
-	mkdir -p "/home/$TARGET_USER/Downloads"
-	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=5G\\t0\\t0" >> /etc/fstab
+		# add go path to secure path
+		{ \
+			echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${TARGET_USER}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/bcc/tools:/home/${TARGET_USER}/.cargo/bin\""; \
+			echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
+			echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
+			echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
+		} >> /etc/sudoers
+	fi
 }
 
 # install rust
@@ -259,15 +273,15 @@ install_golang() {
 
 	GO_VERSION=${GO_VERSION#go}
 
-	# subshell
-	(
-	kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
-	curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.${kernel}-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
-	local user="$USER"
-	# rebuild stdlib for faster builds
-	sudo chown -R "${user}" /usr/local/go/pkg
-	CGO_ENABLED=0 go install -a -installsuffix cgo std
-	)
+	# # subshell
+	# (
+	# kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
+	# curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.${kernel}-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
+	# local user="$USER"
+	# # rebuild stdlib for faster builds
+	# sudo chown -R "${user}" /usr/local/go/pkg
+	# CGO_ENABLED=0 go install -a -installsuffix cgo std
+	# )
 
 	# get commandline tools
 	(
@@ -325,7 +339,6 @@ install_golang() {
 	sudo ln -snf "${GOPATH}/bin/weather" /usr/local/bin/weather
 }
 
-
 install_tools() {
 	echo "Installing golang..."
 	echo
@@ -344,7 +357,7 @@ usage() {
 	echo "  basemin                             - setup sources & install base min pkgs"
     echo "  golang                              - install golang and packages"
 	echo "  rust                                - install rust"
-	echo "  tools                               - install golang, rust, and scripts"
+	echo "  tools                               - install golang, rust"
 }
 
 main() {
@@ -377,6 +390,8 @@ main() {
 		install_golang "$2"
 	elif [[ $cmd == "tools" ]]; then
 		install_tools
+	elif [[ $cmd == "fonts" ]]; then
+		install_font_assets
 	else
 		usage
 	fi

@@ -58,6 +58,7 @@ brew tap caskroom/fonts
 # brew cask fonts
 echo_warn "Installing fonts..."
 brew cask install \
+  font-hack \
   font-anonymous-pro \
   font-dejavu-sans-mono-for-powerline \
   font-droid-sans \

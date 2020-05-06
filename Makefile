@@ -16,7 +16,8 @@ dotfiles: ## Installs the dotfiles.
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
-	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
+	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile; \
+	ln -snf $(CURDIR)/zsh/zshrc $(HOME)/.zshrc;
 	
 
 

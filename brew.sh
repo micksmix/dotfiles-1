@@ -96,6 +96,8 @@ brew install ssh-copy-id
 brew install tree
 brew install vbindiff
 brew install zopfli
+brew install eg-examples
+brew install bat
 
 # misc
 brew cask install itsycal

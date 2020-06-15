@@ -98,6 +98,7 @@ brew install vbindiff
 brew install zopfli
 brew install eg-examples
 brew install bat
+brew cask install filemon
 
 # misc
 brew cask install itsycal

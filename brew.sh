@@ -22,7 +22,7 @@ brew install moreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
 brew install findutils
 # Install GNU `sed`, overwriting the built-in `sed`.
-brew install gnu-sed --with-default-names
+brew install gnu-sed
 brew install bash
 brew install bash-completion2
 # zsh
@@ -38,20 +38,23 @@ if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
   chsh -s "${BREW_PREFIX}/bin/bash";
 fi;
 
-# Install `wget` with IRI support.
-brew install wget --with-iri
+# Install `wget`
+brew install wget
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
 
 # Install more recent versions of some macOS tools.
-brew install vim --with-override-system-vi
+brew install vim
 brew install grep
 brew install openssh
 brew install screen
 brew install tmux
 # brew install php
 brew install gmp
+brew install git
+brew install git-lfs
+brew install svn
 
 # Install fonts
 # brew tap caskroom/fonts
@@ -63,7 +66,7 @@ echo_warn "Installing fonts..."
 brew cask install font-anonymous-pro
 brew cask install font-dejavu-sans-mono-for-powerline
 brew cask install font-droid-sans
-brew cask install font-droid-sans-mono font-droid-sans-mono-for-powerline
+brew cask install font-droid-sans-mono-for-powerline
 brew cask install font-inconsolata font-inconsolata-for-powerline
 brew cask install font-source-code-pro font-source-code-pro-for-powerline
 brew cask install font-source-sans-pro
@@ -81,9 +84,7 @@ brew install xz
 
 # Install other useful binaries.
 brew install the_silver_searcher
-brew install git
-brew install git-lfs
-brew install imagemagick --with-webp
+brew install imagemagick
 brew install jq
 brew install lua
 brew install lynx
@@ -104,17 +105,17 @@ brew cask install filemon
 brew cask install itsycal
 brew install trash
 brew install curl
-brew install iterm2
+brew cask install iterm2
 brew install htop
 brew install wifi-password
 brew install jabba
-brew install vlc
-brew install appcleaner
+brew cask install vlc
+brew cask install appcleaner
 
 # dev stuff
 brew install go
-brew install visual-studio-code
-brew install firefox
+brew cask install visual-studio-code
+brew cask install firefox
 brew cask install google-chrome
 
 # Remove outdated versions from the cellar.

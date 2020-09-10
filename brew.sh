@@ -54,20 +54,20 @@ brew install tmux
 brew install gmp
 
 # Install fonts
-brew tap caskroom/fonts
-# brew tap homebrew/cask-fonts
+# brew tap caskroom/fonts
+brew tap homebrew/cask-fonts
+brew tap homebrew/homebrew-cask-fonts/
 ### font-hack
 # brew cask fonts
 echo_warn "Installing fonts..."
-brew cask install \
-  font-anonymous-pro \
-  font-dejavu-sans-mono-for-powerline \
-  font-droid-sans \
-  font-droid-sans-mono font-droid-sans-mono-for-powerline \
-  font-inconsolata font-inconsolata-for-powerline \
-  font-source-code-pro font-source-code-pro-for-powerline \
-  font-source-sans-pro \
-  font-ubuntu font-ubuntu-mono-powerline
+brew cask install font-anonymous-pro
+brew cask install font-dejavu-sans-mono-for-powerline
+brew cask install font-droid-sans
+brew cask install font-droid-sans-mono font-droid-sans-mono-for-powerline
+brew cask install font-inconsolata font-inconsolata-for-powerline
+brew cask install font-source-code-pro font-source-code-pro-for-powerline
+brew cask install font-source-sans-pro
+brew cask install font-ubuntu font-ubuntu-mono-powerline
 
 # Install some CTF tools; see https://github.com/ctfs/write-ups.
 brew install binutils
@@ -115,7 +115,7 @@ brew install appcleaner
 brew install go
 brew install visual-studio-code
 brew install firefox
-brew install google-chrome
+brew cask install google-chrome
 
 # Remove outdated versions from the cellar.
 brew cleanup

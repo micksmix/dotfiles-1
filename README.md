@@ -1,7 +1,7 @@
 # dotfiles
 
  - Run `make all`
- - Run `./brew`
+ - Run `./brew.sh`
  - `cd bin/`
  - `sudo ./macos-defaults`
  - `cd ../zsh/`

@@ -63,14 +63,19 @@ brew tap homebrew/homebrew-cask-fonts/
 ### font-hack
 # brew cask fonts
 echo_warn "Installing fonts..."
-brew cask install font-anonymous-pro
-brew cask install font-dejavu-sans-mono-for-powerline
-brew cask install font-droid-sans
-brew cask install font-droid-sans-mono-for-powerline
-brew cask install font-inconsolata font-inconsolata-for-powerline
-brew cask install font-source-code-pro font-source-code-pro-for-powerline
-brew cask install font-source-sans-pro
-brew cask install font-ubuntu font-ubuntu-mono-powerline
+brew install --cask font-fira-code \
+  font-fira-mono \
+  font-fira-mono-for-powerline \
+  font-fira-sans
+brew install --cask font-anonymous-pro
+brew install --cask font-dejavu-sans-mono-for-powerline
+brew install --cask font-droid-sans
+brew install --cask font-droid-sans-mono-for-powerline
+brew install --cask font-inconsolata font-inconsolata-for-powerline
+brew install --cask font-source-code-pro font-source-code-pro-for-powerline
+brew install --cask font-source-sans-pro
+brew install --cask font-ubuntu font-ubuntu-mono-powerline
+
 
 # Install some CTF tools; see https://github.com/ctfs/write-ups.
 brew install binutils
@@ -99,24 +104,24 @@ brew install vbindiff
 brew install zopfli
 brew install eg-examples
 brew install bat
-brew cask install filemon
+brew install --cask filemon
 
 # misc
-brew cask install itsycal
+brew install --cask itsycal
 brew install trash
 brew install curl
-brew cask install iterm2
+brew install --cask iterm2
 brew install htop
 brew install wifi-password
 brew install jabba
-brew cask install vlc
-brew cask install appcleaner
+brew install --cask vlc
+brew install --cask appcleaner
 
 # dev stuff
 brew install go
-brew cask install visual-studio-code
-brew cask install firefox
-brew cask install google-chrome
+brew install --cask visual-studio-code
+brew install --cask firefox
+brew install --cask google-chrome
 
 # Remove outdated versions from the cellar.
 brew cleanup

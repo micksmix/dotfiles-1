@@ -1,14 +1,20 @@
 #!/bin/sh
 source ./functions/common
-
+BREW_PREFIX=$(brew --prefix)
 print_line "Setting shell to zsh."
-sudo sh -c "echo $(which zsh) >> /etc/shells" && chsh -s $(which zsh)
+
+# Set brew-installed zsh as default zsh
+if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
+  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
+fi;
 
 # Set brew-installed bash as default bash
 if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
   echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
-  #chsh -s "${BREW_PREFIX}/bin/bash";
 fi;
+
+# set ZSH as default shell
+chsh -s "${BREW_PREFIX}/bin/zsh";
 
 # install oh-my-zsh
 #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

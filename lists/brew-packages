@@ -20,7 +20,7 @@ aws-session-manager-plugin
 awsappleconnect
 awscli
 bash
-bash-completion
+bash-completion2
 bat
 bdw-gc
 berkeley-db
@@ -160,6 +160,7 @@ make
 maven
 mingw-w64
 mitmproxy
+moreutils
 mpfr
 musl-cross
 ncurses

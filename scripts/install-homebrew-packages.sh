@@ -1,6 +1,9 @@
 #!/bin/sh
 source ../functions/common
 
+brew tap homebrew/cask-fonts
+brew tap homebrew/homebrew-cask-fonts/
+
 # Install long list of packages.
 IFS=$'\n'
 

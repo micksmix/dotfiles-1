@@ -5,12 +5,12 @@ print_line "Setting shell to zsh."
 
 # Set brew-installed zsh as default zsh
 if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
+    echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
 fi;
 
 # Set brew-installed bash as default bash
 if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
+    echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
 fi;
 
 # set ZSH as default shell

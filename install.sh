@@ -6,14 +6,14 @@ print_line "Setting up the environment."
 # Copy dotfiles to home
 ./scripts/install-dotfiles.sh
 
-# Set the default shell to zsh
-./scripts/set-shell-to-zsh.sh
-
 # Install homebrew
 ./scripts/install-homebrew.sh
 
 # Install homebrew packages
 ./scripts/install-homebrew-packages.sh
+
+# Set the default shell to zsh
+./scripts/set-shell-to-zsh.sh
 
 # Set sane defaults
 ./scripts/defaults-write.sh

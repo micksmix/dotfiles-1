@@ -6,16 +6,19 @@ brew tap homebrew/cask-fonts
 # Install long list of packages.
 IFS=$'\n'
 
+# Make sure we’re using the latest Homebrew.
+brew update
+
 print_line "Installing Homebrew packages."
 for i in $(cat ./lists/brew-packages)
 do
-    brew install "$i"
+    HOMEBREW_NO_AUTO_UPDATE=1 brew install "$i"
 done
 
 print_line "Installing Homebrew cask packages."
 for i in $(cat ./lists/brew-cask-packages)
 do
-    brew install --cask "$i"
+    HOMEBREW_NO_AUTO_UPDATE=1 brew install --cask "$i"
 done
 
 #print_line "Installing App Store applications."

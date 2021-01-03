@@ -1,4 +1,3 @@
-ack
 adns
 adwaita-icon-theme
 afl-fuzz
@@ -29,17 +28,11 @@ cmake
 coreutils
 cpanminus
 dash
-dbus
-dbus-glib
-dep
-dependency-check
 dive
 docbook
 docbook-xsl
 eg-examples
 enchant
-erlang
-exa
 fd
 findutils
 fontconfig
@@ -73,9 +66,6 @@ graphite2
 graphviz
 grep
 gspell
-gtk+
-gtk+3
-gtk-mac-integration
 gts
 guile
 hadolint
@@ -198,7 +188,6 @@ radamsa
 readline
 reattach-to-user-namespace
 ripgrep
-rpm
 s-lang
 shared-mime-info
 shellcheck
@@ -214,8 +203,6 @@ sslscan
 stunnel
 subversion
 tepl
-terrascan
-tesseract
 the_silver_searcher
 tldr
 tmux
@@ -225,7 +212,6 @@ trivy
 uchardet
 ucl
 unbound
-unixodbc
 upx
 utf8proc
 webp

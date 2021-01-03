@@ -96,8 +96,8 @@ print_line " - Mission control: group by app"
 defaults write com.apple.dock expose-group-apps -bool true
 defaults write com.apple.dock expose-group-by-app -bool true
 
-print_line " - Magnify apps on the dock"
-defaults write com.apple.dock magnification -bool true
+print_line " - Do not magnify apps on the dock"
+defaults write com.apple.dock magnification -bool false
 
 print_line " - Smallify stuff on the dock"
 defaults write com.apple.dock tilesize -int 34

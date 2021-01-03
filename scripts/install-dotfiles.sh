@@ -9,7 +9,6 @@ for file in $(find ./dots/ -name ".*" -not -name ".gitignore" -not -name ".travi
     #ln -sfn $file $HOME/$f
     \cp "$file" "$HOME/$f"
 done
-\cp "$CURDIR/dots/.bash_profile" "$HOME/.profile"
-\cp "$CURDIR/zsh/zshrc" "$HOME/.zshrc"
+
 #ln -snf $CURDIR/.bash_profile $HOME/.profile; \
 #ln -snf $CURDIR/zsh/zshrc $HOME/.zshrc;

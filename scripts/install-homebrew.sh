@@ -10,8 +10,8 @@ if [ ! -f /usr/local/bin/brew ]; then
     sudo xcode-select --install
     sudo xcodebuild -license accept
 
-    # Do the homebrew thing.
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    # Do the homebrew thing
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 # Make sure we’re using the latest Homebrew.

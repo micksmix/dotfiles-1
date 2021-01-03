@@ -34,4 +34,4 @@ print_line "Setting up the environment."
 ./scripts/install-xcode-dependencies.sh
 
 # Restart userspace
-./scripts/restart-userspace.sh
+#./scripts/restart-userspace.sh

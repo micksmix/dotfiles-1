@@ -78,7 +78,6 @@ icu4c
 ilmbase
 imagemagick
 inetutils
-infer
 intltool
 isl
 iso-codes
@@ -172,15 +171,8 @@ powerlevel9k
 protobuf
 proxychains-ng
 pstree
-py2cairo
-py3cairo
 pyenv
 pyenv-virtualenv
-pygobject
-pygobject3
-pygtk
-pygtksourceview
-pyinvoke
 python@2
 python@3
 radamsa

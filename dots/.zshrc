@@ -1,3 +1,4 @@
+
 # zshrc
 export DOTFILES=~/dotfiles
 

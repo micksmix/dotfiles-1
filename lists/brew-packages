@@ -23,7 +23,6 @@ c-ares
 cairo
 carthage
 ccache
-cfn-lint
 cmake
 coreutils
 cpanminus

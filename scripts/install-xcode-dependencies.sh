@@ -1,5 +1,5 @@
 #!/bin/sh
-source functions/common
+source ./functions/common
 
 print_line "Setting up Xcode."
 

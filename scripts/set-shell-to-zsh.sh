@@ -1,5 +1,5 @@
 #!/bin/sh
-source ../functions/common
+source ./functions/common
 
 print_line "Setting shell to zsh."
 sudo sh -c "echo $(which zsh) >> /etc/shells" && chsh -s $(which zsh)
@@ -10,8 +10,6 @@ if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
   #chsh -s "${BREW_PREFIX}/bin/bash";
 fi;
 
-# set zsh as default
-sudo sh -c "echo $(which zsh) >> /etc/shells" && chsh -s $(which zsh)
 # install oh-my-zsh
 #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh

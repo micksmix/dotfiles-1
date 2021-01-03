@@ -1,5 +1,5 @@
 #!/bin/sh
-source ../functions/common
+source ./functions/common
 
 print_line "Restarting userspace in 5 seconds."
 sleep 5

@@ -7,14 +7,13 @@ font-fira-code
 font-fira-mono
 font-fira-mono-for-powerline
 font-fira-sans
-font-anonymous-pro
-font-dejavu-sans-mono-for-powerline
-font-droid-sans
-font-droid-sans-mono-for-powerline
-font-inconsolata font-inconsolata-for-powerline
-font-source-code-pro font-source-code-pro-for-powerline
+font-inconsolata
+font-inconsolata-for-powerline
+font-source-code-pro
+font-source-code-pro-for-powerline
 font-source-sans-pro
-font-ubuntu font-ubuntu-mono-powerline
+font-ubuntu 
+font-ubuntu-mono-powerline
 ghidra
 google-chrome
 grandperspective
